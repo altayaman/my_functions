@@ -142,51 +142,51 @@ class Cluster_Object():
 	def __init__(self, ls=None, flat=None):
 		#if(len(ls) == 1 and flat is None):
 		if(isinstance(ls, list) and flat is None):
-			self.cluster = ls
-			self.flat = ls
+			self.clusters = ls
+			self.clusters_flat = ls
 		elif(isinstance(ls, list) and isinstance(flat, list)):
-			self.cluster = ls
-			self.flat = flat
+			self.clusters = ls
+			self.clusters_flat = flat
 		else:
-			self.cluster = None
-			self.flat = None
+			self.clusters = None
+			self.clusters_flat = None
 
 
 	def merge(self, cluster_object):
 		if(isinstance(cluster_object, Cluster_Object)):
-			cl = [self.cluster] + [cluster_object.get_cluster_deepcopy()]
-			fl = self.flat + cluster_object.get_flat_deepcopy()
+			cl = [self.clusters] + [cluster_object.get_clusters_deepcopy()]
+			fl = self.clusters_flat + cluster_object.get_clusters_flat_deepcopy()
 			return Cluster_Object(cl, fl)
 		else:
 			print('ERROR: \n\tmerging object should be Cluster_Object')
 
-	def get_cluster_deepcopy(self):
+	def get_clusters_deepcopy(self):
 
-		return deepcopy(self.cluster)
+		return deepcopy(self.clusters)
 
-	def get_flat_deepcopy(self):
+	def get_clusters_flat_deepcopy(self):
 
-		return deepcopy(self.flat)
+		return deepcopy(self.clusters_flat)
 
-	def get_cluster(self):
+	def get_clusters(self):
 
-		return self.cluster
+		return self.clusters
 
-	def get_flat(self):
+	def get_clusters_flat(self):
 
-		return self.flat
+		return self.clusters_flat
 
-	def set_cluster(self, cl):
+	def set_clusters(self, cl):
 
-		self.cluster = cl
+		self.clusters = cl
 
-	def set_flat(self, fl):
+	def set_clusters_flat(self, fl):
 
-		self.flat = fl
+		self.clusters_flat = fl
 
 	def reverse(self):
-		self.cluster.reverse()
-		self.flat.reverse()
+		self.clusters.reverse()
+		self.clusters_flat.reverse()
 
 		return self
 
@@ -266,13 +266,13 @@ class H_clustering_2():
 	def return_clusters(self):
 		new_cl_obj = Cluster_Object()
 
-		cl = [cl_obj.get_cluster() for cl_obj in self.clusters]
-		new_cl_obj.set_cluster(cl)
+		cl = [cl_obj.get_clusters() for cl_obj in self.clusters]
+		new_cl_obj.set_clusters(cl)
 
-		fl = [cl_obj.get_flat() for cl_obj in self.clusters]
+		fl = [cl_obj.get_clusters_flat() for cl_obj in self.clusters]
 		fl = itertools.chain.from_iterable(fl)
 		fl = list(fl)
-		new_cl_obj.set_flat(fl)
+		new_cl_obj.set_clusters_flat(fl)
 
 		return new_cl_obj
 
@@ -284,8 +284,8 @@ class H_clustering_2():
 		# print('cluster 1:', cl_1.get_cluster(), cl_1.get_flat())
 		# print('cluster 2:', cl_2.get_cluster(), cl_2.get_flat())
 
-		cl_1_flat = cl_1.get_flat()
-		cl_2_flat = cl_2.get_flat()
+		cl_1_flat = cl_1.get_clusters_flat()
+		cl_2_flat = cl_2.get_clusters_flat()
 		for c in comb:
 			w1 = cl_1_flat[c[0]]
 			w2 = cl_2_flat[c[1]]
