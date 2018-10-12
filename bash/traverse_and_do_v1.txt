@@ -1,0 +1,53 @@
+#!/bin/bash
+
+#file1 = "$1"
+file_pathes=$(find $1 -iname "*.csv")    # gets all csv file pathes in directory passed in stdin
+
+is_print=0
+c=1  # counter
+for file_path in $file_pathes; do
+  #1 - Extract filename details
+  parent_dir=$(dirname "$file_path")     # get parent dir path
+  parent_dir_mod1="$parent_dir""/"       # append backslash to oarent dir path
+  file_name=$(basename "$file_path")     # get filename without path
+  name="${file_name%.*}"                 # extract all before dot
+  extension="${file_name#$name}"         # extract all after dot
+  #justFname=$($fPath | sed "s/.*\///")
+
+  #2.1 - Create new filename
+  new_name="${name//./_}"                # replace all dots with underscore
+  new_file_name="$new_name""$extension"  # merge newname and extension
+  new_file_path="$parent_dir_mod1""$new_file_name"
+
+  #2.2 - Create new filename
+  new_name="$name""_reduced_file"        # replace all dots with underscore
+  new_file_name="$new_name""$extension"  # merge newname and extension
+  new_file_path="$parent_dir_mod1""$new_file_name"
+
+  # echo "$file_path"
+  # echo "$new_file_path"
+  # echo "$parent_dir"
+  # echo "$parent_dir_mod1"
+  # echo "$file_name"
+
+  # echo "$name"
+  # echo "$extension"
+  # echo "$new_name"
+  # echo "$new_file_name"
+
+
+  echo "File ""$c"
+  let c=c+1
+  head -2 "$file_path" > "$new_file_path"  # command execution: output top 2 rows from current file into new file
+  rm "$file_path"                          # command execution: delete current file
+
+  if [ "$file_name" != "$new_file_name" ] && [ "$is_print" == 1 ]; then
+  	echo "   $file_path" will be renamed to 
+  	echo "   $new_file_path"
+    echo
+
+  	# echo mv "$file_path" "$new_file_path"   # prints out rename command
+    # mv "$file_path" "$new_file_path"        # command execution: renaming current file
+  fi
+done
+

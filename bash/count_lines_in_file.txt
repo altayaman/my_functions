@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#_________________________________________
+# Usage in terminal run as:
+#	./count_lines_in_file.txt <file_path>
+
+
+
+# declare var FILE1 that accepts first argument
+# $0 is the script name, $1 id the first ARG, $2 is second...
+FILE1="$1"
+
+c=0
+while IFS='' read col1 col2
+do
+    #echo "I got:$col1|$col2"
+    let c=c+1
+done < "$FILE1"
+echo 'Number of lines: ' $c
