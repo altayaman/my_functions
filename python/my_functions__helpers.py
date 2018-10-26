@@ -22,6 +22,11 @@ def print_elapsed_time(start_time):
 	str_ = 'Time spent for training:' + time.strftime("%H:%M:%S", time.gmtime(elapsed_time))
 	print(str_)
 
+def get_elapsed_time(start_time):
+    elapsed_time = time.time()-start_time
+    str_ = time.strftime("%H:%M:%S", time.gmtime(elapsed_time))
+    return str_
+	
 def iter_CSV_with_index(my_infile_path, delim=';'):
     #with open(my_infile_path, 'r', encoding='utf-8-sig') as infile:
     #with open(my_infile_path, 'r', encoding = "ISO-8859-1") as infile:
